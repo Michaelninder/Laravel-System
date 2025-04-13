@@ -1,16 +1,25 @@
 <nav class="bg-white shadow py-3 px-6 flex justify-between items-center">
     <div class="flex items-center space-x-4">
-        <a href="{{ route('auth.login') }}" class="flex items-center text-gray-700 hover:text-blue-600">
-            <i class="bi bi-box-arrow-in-right mr-1"></i> {{ __('auth.login') }}
-        </a>
-        <a href="{{ route('auth.register') }}" class="flex items-center text-gray-700 hover:text-green-600">
-            <i class="bi bi-person-plus-fill mr-1"></i> {{ __('auth.register') }}
-        </a>
+        @auth
+            <form action="{{ route('auth.logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="flex items-center text-gray-700 hover:text-blue-600">
+                    <i class="bi bi-box-arrow-out mr-1"></i> {{ __('auth.logout') }}
+                </button>
+            </form>
+        @else
+            <a href="{{ route('auth.login') }}" class="flex items-center text-gray-700 hover:text-blue-600">
+                <i class="bi bi-box-arrow-in-right mr-1"></i> {{ __('auth.login') }}
+            </a>
+            <a href="{{ route('auth.register') }}" class="flex items-center text-gray-700 hover:text-green-600">
+                <i class="bi bi-person-plus-fill mr-1"></i> {{ __('auth.register') }}
+            </a>
+        @endauth
     </div>
 
     <div x-data="{ open: false }" class="relative inline-block text-left">
         <button @click="open = !open" type="button"
-            class="inline-flex items-center border border-gray-300 rounded px-3 py-1 bg-white hover:bg-gray-100">
+                class="inline-flex items-center border border-gray-300 rounded px-3 py-1 bg-white hover:bg-gray-100">
             <img src="{{ asset('img/SetLocale/' . app()->getLocale() . '.png') }}"
                  alt="{{ app()->getLocale() }}" class="w-5 h-3 mr-2">
             <span>{{ strtoupper(app()->getLocale()) }}</span>
@@ -20,7 +29,7 @@
         <div x-show="open" @click.away="open = false"
              x-transition
              class="absolute right-0 mt-2 w-28 bg-white border rounded shadow-lg z-50">
-            @foreach(File::directories(resource_path('lang')) as $langDir)
+            @foreach(File::exists(resource_path('lang')) ? File::directories(resource_path('lang')) : [] as $langDir)
                 @php $lang = basename($langDir); @endphp
                 @if($lang !== app()->getLocale())
                     <a href="{{ url('/set-locale/' . $lang) }}"
