@@ -5,4 +5,4 @@ A Clean Laravel Webite system with SetLocale, Admin Dashboard and more
 
 ### Credits
 #### Images
-- all Images used for SetLocale(lan-switcher) are from https://skrime.eu/other/flag
+- all Images used for SetLocale(lang-switcher) are from https://skrime.eu/other/flag
