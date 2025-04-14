@@ -1,9 +1,11 @@
 <nav class="bg-white shadow py-3 px-6 flex justify-between items-center">
     {{-- Left section --}}
-    <div class="flex items-center space-x-4">
-        {{-- App Name / Icon --}}
-        <span class="font-semibold text-lg text-blue-600">{{ env('APP_NAME') }}</span>
-    </div>
+	<div class="flex items-center space-x-4">
+	    {{-- App Name / Icon with Link to Home --}}
+	    <a href="{{ route('pages.home') }}" class="font-semibold text-lg text-blue-600 hover:text-blue-800">
+	        {{ env('APP_NAME') }}
+	    </a>
+	</div>
 
     {{-- Right section --}}
     <div class="flex items-center space-x-4">
