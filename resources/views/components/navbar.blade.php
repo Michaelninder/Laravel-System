@@ -3,26 +3,27 @@
     <div class="flex items-center space-x-4">
         {{-- App Name / Icon --}}
         <span class="font-semibold text-lg text-blue-600">{{ env('APP_NAME') }}</span>
-
-        @auth
-            <form action="{{ route('auth.logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="flex items-center text-gray-700 hover:text-blue-600">
-                    <i class="bi bi-box-arrow-out mr-1"></i> {{ __('auth.logout') }}
-                </button>
-            </form>
-
-            
-    		@if(auth()->user()->isAdmin())
-    		    <a href="{{ route('admin.overview') }}" class="text-gray-700 hover:text-blue-600">
-    		        <i class="bi bi-shield-lock mr-1"></i> {{ __('strings.admin_dashboard') }}
-    		    </a>
-    		@endif
-        @endauth
     </div>
 
     {{-- Right section --}}
     <div class="flex items-center space-x-4">
+        @auth
+            {{-- Admin Dashboard --}}
+            @if(auth()->user()->isAdmin())
+                <a href="{{ route('admin.overview') }}" class="flex items-center text-gray-700 hover:text-blue-600">
+                    <i class="bi bi-shield-lock mr-1"></i> {{ __('strings.admin_dashboard') }}
+                </a>
+            @endif
+
+            {{-- Logout --}}
+            <form action="{{ route('auth.logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="flex items-center text-gray-700 hover:text-red-600">
+                    <i class="bi bi-box-arrow-right mr-1"></i> {{ __('auth.logout') }}
+                </button>
+            </form>
+        @endauth
+
         @guest
             <a href="{{ route('auth.login') }}" class="flex items-center text-gray-700 hover:text-blue-600">
                 <i class="bi bi-box-arrow-in-right mr-1"></i> {{ __('auth.login') }}
