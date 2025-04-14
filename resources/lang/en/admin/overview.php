@@ -1,6 +1,9 @@
 <?php
 
 return [
-    'title' => 'Admin Overview',
-    'welcome' => 'Welcome to the admin dashboard.',
+    'title' => 'Admin Dashboard Overview',
+    'description' => 'Here you can find an overview of key application statistics.',
+    'total_users' => 'Total Users',
+    'total_admins' => 'Total Admins',
+    'total_balance' => 'Total Balance',
 ];
