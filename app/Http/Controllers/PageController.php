@@ -14,7 +14,7 @@ class PageController extends Controller
 
     public function rules()
 	{
-		$rules = Rules::orderBy('order_index')->get();
+		$rules = Rule::orderBy('order_index')->get();
 		return view('pages.rules', compact('rules'));
 	}
 }
