@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
@@ -20,7 +21,7 @@ Route::get('/set-locale/{locale}', function ($locale) {
     return redirect()->back(); 
 });
 
-Route::get('/', function () { return view('pages.home'); })->name('pages.home');
+Route::get('/', [PageController::class, 'home'])->name('pages.home');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('auth.login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login.submit');
@@ -37,11 +38,11 @@ Route::fallback(function () { return response()->view('errors.show', ['error' =>
 Route::get('/error/{error}', [ErrorController::class, 'show'])->name('errors.custom');
 	
 Route::middleware(['auth', 'check.admin'])->prefix('admin')->name('admin.')->group(function () {
-	Route::get('/overview', [AdminPageController::class, 'overview'])->name('overview');
+    Route::get('/overview', [AdminPageController::class, 'overview'])->name('overview');
 	
 	Route::get('/users', [AdminUserController::class, 'listUsers'])->name('users.index');
-	Route::get('/users/create', [AdminUserController::class, 'createUser'])->name('users.create');
-	Route::post('/users', [AdminUserController::class, 'storeUser'])->name('users.store');
-	Route::get('/users/{user}/edit', [AdminUserController::class, 'editUser'])->name('users.edit');
-	Route::put('/users/{user}', [AdminUserController::class, 'updateUser'])->name('users.update');
+    Route::get('/users/create', [AdminUserController::class, 'createUser'])->name('users.create');
+    Route::post('/users', [AdminUserController::class, 'storeUser'])->name('users.store');
+    Route::get('/users/{user}/edit', [AdminUserController::class, 'editUser'])->name('users.edit');
+    Route::put('/users/{user}', [AdminUserController::class, 'updateUser'])->name('users.update');
 });
