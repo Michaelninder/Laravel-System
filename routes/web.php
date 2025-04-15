@@ -40,7 +40,7 @@ Route::get('/error/{error}', [ErrorController::class, 'show'])->name('errors.cus
 Route::middleware(['auth', 'check.admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/overview', [AdminPageController::class, 'overview'])->name('overview');
 	
-	Route::get('/users', [AdminUserController::class, 'listUsers'])->name('users.index');
+    Route::get('/users', [AdminUserController::class, 'listUsers'])->name('users.index');
     Route::get('/users/create', [AdminUserController::class, 'createUser'])->name('users.create');
     Route::post('/users', [AdminUserController::class, 'storeUser'])->name('users.store');
     Route::get('/users/{user}/edit', [AdminUserController::class, 'editUser'])->name('users.edit');
