@@ -89,5 +89,10 @@
         <div class="mt-6">
             {{ $tickets->withQueryString()->links() }}
         </div>
+		<a href="{{ route('support.create') }}"
+		   class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium py-2 px-4 rounded transition">
+		    <i class="bi bi-plus-circle-fill text-lg"></i>
+		    {{ __('support.create_ticket') }}
+		</a>
     </div>
 @endsection
