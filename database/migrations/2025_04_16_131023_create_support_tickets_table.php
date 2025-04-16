@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void {
         Schema::create('support_tickets', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_uuid');
-            $table->string('subject');
-            $table->string('theme')->nullable();
-            $table->string('status')->default('open');
-            $table->timestamps();
-        });
+		    $table->id();
+		    $table->uuid('uuid')->unique();
+		    $table->uuid('user_uuid');
+		    $table->string('subject');
+		    $table->string('theme')->nullable();
+		    $table->string('status')->default('open');
+		    $table->timestamps();
+		});
     }
 
     public function down(): void {
