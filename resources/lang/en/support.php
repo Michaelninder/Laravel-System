@@ -16,4 +16,8 @@ return [
     'set_pending' => 'Set to Pending',
     'status_updated' => 'Ticket status has been updated.',
     'message_sent' => 'Message sent successfully.',
+	'status_open' => 'Open',
+	'status_closed' => 'Closed',
+	'status_pending' => 'Pending',
+	'no_tickets' => 'There are no Tickets meeting this request.',
 ];
