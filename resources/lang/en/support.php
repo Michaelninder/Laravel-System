@@ -20,5 +20,9 @@ return [
     'status_closed' => 'Closed',
     'status_pending' => 'Pending',
     'no_tickets' => 'There are no Tickets meeting this request.',
+    'open_tickets' => 'Open Tickets',
+    'closed_tickets' => 'Closed Tickets',
+    'all_tickets' => 'All Tickets',
+    'create_ticket' => 'Create Ticket',
     'view' => 'View Ticket',
 ];
