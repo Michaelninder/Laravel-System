@@ -1,7 +1,5 @@
 @extends('layouts.dashboard')
 
-<!-- inspired by support.mine-hoster.net -->
-
 @section('content')
     <div class="max-w-7xl mx-auto mt-2">
         <div class="mb-6 flex items-center border border-gray-300 rounded-lg overflow-hidden">
@@ -25,33 +23,39 @@
             <div class="overflow-x-auto">
                 <table class="table-fixed w-full">
                     <thead class="bg-gray-100">
-                        <tr>
-                            <th class="w-[35%] px-4 py-3 text-left text-sm font-semibold text-gray-900">
-                                {{ __('support.subject') }}
-                            </th>
-                            <th class="w-[15%] px-4 py-3 text-left text-sm font-semibold text-gray-900">
-                                {{ __('support.status') }}
-                            </th>
-                            <th class="w-[20%] px-4 py-3 text-left text-sm font-semibold text-gray-900">
-                                {{ __('support.user') }}
-                            </th>
-                            <th class="w-[20%] px-4 py-3 text-left text-sm font-semibold text-gray-900">
-                                {{ __('support.last_activity') }}
-                            </th>
-                            <th class="w-[10%] px-4 py-3 text-right text-sm font-semibold text-gray-900">
-                                {{ __('support.actions') }}
-                            </th>
-                        </tr>
-                    </thead>
+					    <tr>
+					        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+					            {{ __('support.subject') }}
+					        </th>
+					        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+					            {{ __('support.status') }}
+					        </th>
+					        @if(auth()->user()->isAdmin())
+					            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+					                {{ __('support.user') }}
+					            </th>
+					        @endif
+					        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+					            {{ __('support.created_at') }}
+					        </th>
+					        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+					            {{ __('support.last_activity') }}
+					        </th>
+					        <th class="px-4 py-3 text-right text-sm font-semibold text-gray-900">
+					            {{ __('strings.actions') }}
+					        </th>
+					    </tr>
+					</thead>
+
                     <tbody class="divide-y divide-gray-200">
                         @forelse ($tickets as $ticket)
                             <tr>
-                            	<td class="px-4 py-3 text-sm">
-								    <a href="{{ route('support.view', $ticket->uuid) }}"
-								       class="text-gray-600 hover:text-blue-500 font-medium">
-								        {{ $ticket->subject }}
-								    </a>
-								</td>
+                                <td class="px-4 py-3 text-sm">
+                                    <a href="{{ route('support.view', $ticket->uuid) }}"
+                                       class="text-gray-600 hover:text-blue-500 font-medium">
+                                        {{ $ticket->subject }}
+                                    </a>
+                                </td>
                                 <td class="px-4 py-3 text-sm">
                                     <span class="inline-block px-2 py-0.5 rounded-md text-xs font-semibold
                                         @if($ticket->status === 'open') bg-green-100 text-green-800 border border-green-200
@@ -61,8 +65,13 @@
                                         {{ __('support.status_'.$ticket->status) }}
                                     </span>
                                 </td>
+                                @if(auth()->user()->isAdmin())
                                 <td class="px-4 py-3 text-sm text-gray-700">
                                     {{ $ticket->user->username ?? $ticket->user_uuid }}
+                                </td>
+                                @endif
+                                <td class="px-4 py-3 text-sm text-gray-600">
+                                    {{ $ticket->created_at->diffForHumans() }}
                                 </td>
                                 <td class="px-4 py-3 text-sm text-gray-600">
                                     {{ $ticket->updated_at->diffForHumans() }}
@@ -76,7 +85,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-4 py-6 text-center text-gray-500 text-sm">
+                                <td colspan="6" class="px-4 py-6 text-center text-gray-500 text-sm">
                                     {{ __('support.no_tickets') }}
                                 </td>
                             </tr>
@@ -89,10 +98,11 @@
         <div class="mt-6">
             {{ $tickets->withQueryString()->links() }}
         </div>
-		<a href="{{ route('support.create') }}"
-		   class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium py-2 px-4 rounded transition">
-		    <i class="bi bi-plus-circle-fill text-lg"></i>
-		    {{ __('support.create_ticket') }}
-		</a>
+
+        <a href="{{ route('support.create') }}"
+           class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium py-2 px-4 rounded transition mt-4">
+            <i class="bi bi-plus-circle-fill text-lg"></i>
+            {{ __('support.create_ticket') }}
+        </a>
     </div>
 @endsection
