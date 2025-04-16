@@ -23,7 +23,7 @@ class SupportTicket extends Model
 
     public function messages()
     {
-        return $this->hasMany(SupportMessage::class, 'ticket_uuid', 'id');
+        return $this->hasMany(SupportMessage::class, 'ticket_uuid', 'uuid');
     }
 
     public function user()
