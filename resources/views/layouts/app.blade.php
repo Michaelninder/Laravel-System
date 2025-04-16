@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -10,10 +10,13 @@
 
     @include('components.navbar')
 
-    <main class="min-h-screen flex items-center justify-center py-8">
+    <!--main class="min-h-screen flex items-center justify-center py-8"-->
+	<main class="flex items-center justify-center py-8">
         @yield('content')
     </main>
     
+    @include('components.footer')
+	
     <script src="//unpkg.com/alpinejs" defer></script>
 
 </body>
