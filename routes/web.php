@@ -41,11 +41,12 @@ Route::get('/error/{error}', [ErrorController::class, 'show'])->name('errors.cus
 
 Route::middleware('auth')->group(function () {
     Route::get('/support', [SupportController::class, 'overview'])->name('support.overview');
+    Route::get('/support/overview', [SupportController::class, 'overview']);
     Route::get('/support/create', [SupportController::class, 'create'])->name('support.create');
     Route::post('/support/create', [SupportController::class, 'store'])->name('support.store');
-	Route::get('/support/{ticket:uuid}', [SupportController::class, 'view'])->name('support.view');
-	Route::post('/support/{ticket:uuid}/send', [SupportController::class, 'sendMessage'])->name('support.send');
-	Route::post('/support/{ticket:uuid}/status/{status}', [SupportController::class, 'updateStatus'])->name('support.updateStatus');
+    Route::get('/support/{ticket:uuid}', [SupportController::class, 'view'])->name('support.view');
+    Route::post('/support/{ticket:uuid}/send', [SupportController::class, 'sendMessage'])->name('support.send');
+    Route::post('/support/{ticket:uuid}/status/{status}', [SupportController::class, 'updateStatus'])->name('support.updateStatus');
 });
 
 
