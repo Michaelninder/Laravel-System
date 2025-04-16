@@ -23,30 +23,29 @@
             <div class="overflow-x-auto">
                 <table class="table-fixed w-full">
                     <thead class="bg-gray-100">
-					    <tr>
-					        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">
-					            {{ __('support.subject') }}
-					        </th>
-					        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">
-					            {{ __('support.status') }}
-					        </th>
-					        @if(auth()->user()->isAdmin())
-					            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">
-					                {{ __('support.user') }}
-					            </th>
-					        @endif
-					        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">
-					            {{ __('support.created_at') }}
-					        </th>
-					        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-900">
-					            {{ __('support.last_activity') }}
-					        </th>
-					        <th class="px-4 py-3 text-right text-sm font-semibold text-gray-900">
-					            {{ __('strings.actions') }}
-					        </th>
-					    </tr>
-					</thead>
-
+                        <tr>
+                            <th class="w-[45%] px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                                {{ __('support.subject') }}
+                            </th>
+                            <th class="w-[5%] px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                                {{ __('support.status') }}
+                            </th>
+                            @if(auth()->user()->isAdmin())
+                            <th class="w-[15%] px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                                {{ __('support.user') }}
+                            </th>
+                            @endif
+                            <th class="w-[15%] px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                                {{ __('support.created_at') }}
+                            </th>
+                            <th class="w-[15%] px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                                {{ __('support.last_activity') }}
+                            </th>
+                            <th class="w-[5%] px-4 py-3 text-right text-sm font-semibold text-gray-900">
+                                {{ __('strings.actions') }}
+                            </th>
+                        </tr>
+                    </thead>
                     <tbody class="divide-y divide-gray-200">
                         @forelse ($tickets as $ticket)
                             <tr>
