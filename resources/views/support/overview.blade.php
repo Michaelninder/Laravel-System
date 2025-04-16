@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <div class="max-w-7xl mx-auto mt-2">
+    <div class="max-w-7xl mx-auto mt-8">
         <div class="mb-6 flex items-center border border-gray-300 rounded-lg overflow-hidden">
             <a href="{{ route('support.overview') }}"
                class="whitespace-nowrap py-3.5 px-3 text-sm transition-colors text-center rounded-l-md {{ !request('status') ? 'bg-minehoster-200/60 text-minehoster-600 font-semibold' : 'text-gray-400 hover:bg-minehoster-200/60 hover:text-minehoster-600' }}">
