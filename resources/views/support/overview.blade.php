@@ -46,9 +46,12 @@
                     <tbody class="divide-y divide-gray-200">
                         @forelse ($tickets as $ticket)
                             <tr>
-                                <td class="px-4 py-3 text-sm text-gray-800">
-                                    {{ $ticket->subject }}
-                                </td>
+                            	<td class="px-4 py-3 text-sm">
+								    <a href="{{ route('support.view', $ticket->uuid) }}"
+								       class="text-gray-600 hover:text-blue-500 font-medium">
+								        {{ $ticket->subject }}
+								    </a>
+								</td>
                                 <td class="px-4 py-3 text-sm">
                                     <span class="inline-block px-2 py-0.5 rounded-md text-xs font-semibold
                                         @if($ticket->status === 'open') bg-green-100 text-green-800 border border-green-200
