@@ -27,7 +27,7 @@
     @endif
     
     <!--main class="min-h-screen flex items-center justify-center py-8"-->
-	<main class="flex items-center  py-8 px-4">
+	<main class="flex items-center justify-center py-8 px-4">
         @yield('content')
     </main>
 
