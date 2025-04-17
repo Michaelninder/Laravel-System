@@ -15,12 +15,12 @@
 ```
 ### 📜 Rules Table (``rules``)
 ```php
-   id();
-   uuid('uuid')->unique();
-   string('title');
-   text('content')->nullable();
-   integer('order_index')->nullable();
-   timestamps();
+   id()
+   uuid('uuid')->unique()
+   string('title')
+   text('content')->nullable()
+   integer('order_index')->nullable()
+   timestamps()
 ```
 ### 🎫 Support Tickets Table (``support_tickets``)
 ```php
