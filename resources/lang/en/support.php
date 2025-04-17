@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'support' => 'Support',
+    'title' => 'Support',
     'type_message' => 'Type your message...',
     'send' => 'Send',
     'ticket_information' => 'Ticket Information',
