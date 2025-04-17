@@ -1,5 +1,4 @@
 # 📦 Database Structure
-
 ### 🧑‍💻 Users Table (``users``)
 ```php
    id()
@@ -22,6 +21,7 @@
    integer('order_index')->nullable()
    timestamps()
 ```
+## Support System
 ### 🎫 Support Tickets Table (``support_tickets``)
 ```php
    id()
@@ -39,5 +39,46 @@
    uuid('ticket_uuid') // refer to support_tickets.uuid
    uuid('user_uuid')   // refer to users.uuid
    text('message')
+   timestamps()
+```
+## Forum System
+### 🗂️ Forums Table (``forums``)
+```php
+   id()
+   uuid('uuid')->unique()
+   string('name')
+   text('description')->nullable()
+   boolean('is_locked')->default(false)
+   integer('order_index')->default(0)
+   timestamps()
+```
+### 📄 Forum Threads Table (``forum_threads``)
+```php
+   id()
+   uuid('uuid')->unique()
+   uuid('forum_uuid')  // refer to forums.uuid
+   uuid('user_uuid')   // thread author (users.uuid)
+   string('title')
+   boolean('is_pinned')->default(false)
+   boolean('is_locked')->default(false)
+   integer('views')->default(0)
+   timestamps() // created_at = posted, updated_at = last reply
+```
+### 💬 Forum Comments Table (``forum_comments``)
+```php
+   id()
+   uuid('uuid')->unique()
+   uuid('thread_uuid') // refer to forum_threads.uuid
+   uuid('user_uuid')   // refer to users.uuid
+   text('body')
+   timestamps()
+```
+### 👍 Forum Votes Table (``forum_votes``)
+```php
+   id()
+   uuid('uuid')->unique()
+   uuid('comment_uuid') // refer to forum_comments.uuid
+   uuid('user_uuid')    // who voted (users.uuid)
+   boolean('is_upvote') // true = upvote, false = downvote
    timestamps()
 ```
