@@ -50,25 +50,27 @@ Route::middleware('auth')->group(function () {
     Route::post('/support/{ticket:uuid}/status/{status}', [SupportController::class, 'updateStatus'])->name('support.updateStatus');
 });
 
-
 Route::prefix('forum')->group(function () {
     Route::get('/', [ForumController::class, 'overview'])->name('forum.overview');
-    Route::get('/{uuid}', [ForumController::class, 'viewForum'])->name('forum.view');
+    Route::get('/{forum:uuid}', [ForumController::class, 'showForum'])->name('forum.view');
+    Route::get('/{forum:uuid}/thread/{thread:uuid}', [ForumController::class, 'showForum'])->name('forum.thread.view');
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/my-threads', [ForumController::class, 'myThreads'])->name('forum.my_threads');
-        Route::get('/thread/create', [ForumController::class, 'createThread'])->name('forum.thread.create');
+		
+		Route::get('/{forum:uuid}/thread/create', [ForumController::class, 'createThread'])->name('forum.thread.create');
         Route::post('/thread', [ForumController::class, 'storeThread'])->name('forum.thread.store');
-        Route::get('/thread/{thread}/edit', [ForumController::class, 'editThread'])->name('forum.thread.edit');
-        Route::put('/thread/{thread}', [ForumController::class, 'updateThread'])->name('forum.thread.update');
-        Route::delete('/thread/{thread}', [ForumController::class, 'destroyThread'])->name('forum.thread.destroy');
+
+        Route::get('/thread/{thread:uuid}/edit', [ForumController::class, 'editThread'])->name('forum.thread.edit');
+        Route::put('/thread/{thread:uuid}', [ForumController::class, 'updateThread'])->name('forum.thread.update');
+        Route::delete('/thread/{thread:uuid}', [ForumController::class, 'destroyThread'])->name('forum.thread.destroy');
 
         Route::middleware('check.admin')->group(function () {
             Route::get('/admin/create', [ForumController::class, 'createForum'])->name('forum.create');
             Route::post('/admin/create', [ForumController::class, 'storeForum'])->name('forum.store');
-            Route::get('/admin/edit/{uuid}', [ForumController::class, 'editForum'])->name('forum.edit');
-            Route::post('/admin/update/{uuid}', [ForumController::class, 'updateForum'])->name('forum.update');
-			Route::delete('/admin/delete/{forum}', [ForumController::class, 'destroyForum'])->name('forum.destroy');
+            Route::get('/admin/edit/{forum:uuid}', [ForumController::class, 'editForum'])->name('forum.edit');
+            Route::post('/admin/update/{forum:uuid}', [ForumController::class, 'updateForum'])->name('forum.update');
+            Route::delete('/admin/delete/{forum:uuid}', [ForumController::class, 'destroyForum'])->name('forum.destroy');
         });
     });
 });
