@@ -19,7 +19,7 @@
 
     <div class="space-y-4">
         @forelse ($forum->threads as $thread)
-            <div class="p-4 bg-white rounded shadow hover:bg-gray-50 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div class="border border-gray-200 rounded p-4 bg-white flex justify-between items-start">
                 <div>
                     <h2 class="font-semibold text-base">
                         <a href="{{ route('forum.thread.view', ['forum' => $forum->uuid, 'thread' => $thread->uuid]) }}" class="text-blue-600 hover:underline">
@@ -32,7 +32,7 @@
                 </div>
 
                 @if (auth()->check() && (auth()->user()->isAdmin() || auth()->user()->uuid === $thread->user_uuid))
-                    <div class="flex space-x-2 mt-2 sm:mt-0">
+			        <div class="flex space-x-2">
                         <a href="{{ route('forum.thread.edit', $thread->uuid) }}" class="text-sm text-yellow-500 hover:text-yellow-600 flex items-center">
                             <i class="bi bi-pencil-square mr-1"></i> {{ __('forum.thread.edit') }}
                         </a>
@@ -43,7 +43,7 @@
                                 <i class="bi bi-trash3-fill mr-1"></i> {{ __('forum.thread.delete') }}
                             </button>
                         </form>
-                    </div>
+					</div>
                 @endif
             </div>
         @empty
