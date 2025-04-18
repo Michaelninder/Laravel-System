@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Forum;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ForumController extends Controller
 {
@@ -29,20 +30,27 @@ class ForumController extends Controller
     }
 
     public function storeForum(Request $request)
-    {
-        if (!auth()->user()?->isAdmin()) {
-            abort(403);
-        }
-
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string|max:1000',
-        ]);
-
-        Forum::create($validated);
-
-        return redirect()->route('forum.overview')->with('success', __('forum.created'));
-    }
+	{
+	    if (!auth()->user()?->isAdmin()) {
+	        abort(403);
+	    }
+	
+	    $validated = $request->validate([
+	        'name' => 'required|string|max:255',
+	        'description' => 'nullable|string|max:1000',
+	        'order_index' => 'nullable|integer',
+	    ]);
+	
+	    Forum::create([
+	        'uuid' => Str::uuid(),
+	        'name' => $validated['name'],
+	        'description' => $validated['description'] ?? null,
+	        'order_index' => $validated['order_index'] ?? 0,
+	        'is_locked' => false,
+	    ]);
+	
+	    return redirect()->route('forum.overview')->with('success', __('forum.created'));
+	}
 
     public function editForum(Forum $forum)
     {
