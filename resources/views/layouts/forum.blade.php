@@ -25,7 +25,7 @@
 		                    </a>
 		                </li>
 		                <li>
-		                    <a href="{{ route('forum.thread.create') }}" class="text-gray-700 hover:text-blue-600 flex items-center">
+		                    <a href="{{ route('forum.thread.create', $forum) }}" class="text-gray-700 hover:text-blue-600 flex items-center">
 		                        <i class="bi bi-plus-square mr-2"></i> {{ __('forum.create_thread') }}
 		                    </a>
 		                </li>
