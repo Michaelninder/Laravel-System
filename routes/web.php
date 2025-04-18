@@ -6,6 +6,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\SupportController;
+use App\Http\Controllers\ForumController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\RulesController as AdminRulesController;
@@ -50,6 +51,27 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::prefix('forum')->group(function () {
+    Route::get('/', [ForumController::class, 'overview'])->name('forum.overview');
+    Route::get('/{uuid}', [ForumController::class, 'view'])->name('forum.view');
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/my-threads', [ForumController::class, 'myThreads'])->name('forum.my_threads');
+        Route::get('/thread/create', [ForumController::class, 'createThread'])->name('forum.thread.create');
+        Route::post('/thread', [ForumController::class, 'storeThread'])->name('forum.thread.store');
+        Route::get('/thread/{thread}/edit', [ForumController::class, 'editThread'])->name('forum.thread.edit');
+        Route::put('/thread/{thread}', [ForumController::class, 'updateThread'])->name('forum.thread.update');
+        Route::delete('/thread/{thread}', [ForumController::class, 'destroyThread'])->name('forum.thread.destroy');
+
+        Route::middleware('check.admin')->group(function () {
+            Route::get('/admin/create', [ForumController::class, 'createForum'])->name('forum.create');
+            Route::post('/admin/create', [ForumController::class, 'storeForum'])->name('forum.store');
+            Route::get('/admin/edit/{uuid}', [ForumController::class, 'editForum'])->name('forum.edit');
+            Route::post('/admin/update/{uuid}', [ForumController::class, 'updateForum'])->name('forum.update');
+        });
+    });
+});
+
 Route::middleware(['auth', 'check.admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/overview', [AdminPageController::class, 'overview'])->name('overview');
 
@@ -64,8 +86,4 @@ Route::middleware(['auth', 'check.admin'])->prefix('admin')->name('admin.')->gro
     Route::post('/rules', [AdminRulesController::class, 'storeRule'])->name('rules.store');
     Route::get('/rules/{rule}/edit', [AdminRulesController::class, 'editRule'])->name('rules.edit');
     Route::put('/rules/{rule}', [AdminRulesController::class, 'updateRule'])->name('rules.update');
-
-    Route::get('/support', [AdminSupportController::class, 'index'])->name('support.index');
-    Route::get('/support/{ticket}', [AdminSupportController::class, 'view'])->name('support.view');
-    Route::post('/support/{ticket}/message', [AdminSupportController::class, 'sendMessage'])->name('support.message.send');
 });
