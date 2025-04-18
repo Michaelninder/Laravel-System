@@ -68,6 +68,7 @@ Route::prefix('forum')->group(function () {
             Route::post('/admin/create', [ForumController::class, 'storeForum'])->name('forum.store');
             Route::get('/admin/edit/{uuid}', [ForumController::class, 'editForum'])->name('forum.edit');
             Route::post('/admin/update/{uuid}', [ForumController::class, 'updateForum'])->name('forum.update');
+			Route::delete('/admin/delete/{forum}', [ForumController::class, 'destroyForum'])->name('forum.destroy');
         });
     });
 });
