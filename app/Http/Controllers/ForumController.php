@@ -106,29 +106,19 @@ class ForumController extends Controller
 	        'forum_uuid' => 'required|exists:forums,uuid',
 	        'title' => 'required|string|max:255',
 	        'message' => 'required|string',
-	        'tags' => 'nullable|string|max:255',
-	        'attachment' => 'nullable|file|max:2048', // 2MB max
 	    ]);
 	
 	    $forum = Forum::where('uuid', $validated['forum_uuid'])->firstOrFail();
 	    $user = auth()->user();
-	
-	    // Upload attachment if provided
-	    $attachmentPath = null;
-	    if ($request->hasFile('attachment')) {
-	        $attachmentPath = $request->file('attachment')->store('attachments', 'public');
-	    }
 	
 	    $thread = ForumThread::create([
 	        'uuid' => Str::uuid(),
 	        'forum_uuid' => $forum->uuid,
 	        'user_uuid' => $user->uuid,
 	        'title' => $validated['title'],
-	        'tags' => $validated['tags'] ?? null,
 	        'is_pinned' => false,
 	        'is_locked' => false,
 	        'views' => 0,
-	        'attachment' => $attachmentPath,
 	    ]);
 	
 	    ForumComment::create([
