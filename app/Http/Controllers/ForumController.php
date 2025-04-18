@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\ForumThread as Thread;
 
 use App\Models\Forum;
+use App\Models\ForumThread;
+use App\Models\ForumComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -16,7 +19,7 @@ class ForumController extends Controller
 
     public function showForum(Forum $forum)
     {
-        $forum->load('threads.user');
+        $forum->load('threads');
         return view('forum.view', compact('forum'));
     }
 
@@ -72,6 +75,7 @@ class ForumController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
+	        'order_index' => 'nullable|integer',
         ]);
 
         $forum->update($validated);
@@ -90,4 +94,85 @@ class ForumController extends Controller
 
         return redirect()->route('forum.overview')->with('success', __('forum.deleted'));
     }
+	
+	public function createThread(Forum $forum)
+	{
+	    return view('forum.thread.create', compact('forum'));
+	}
+	
+	public function storeThread(Request $request)
+	{
+	    $validated = $request->validate([
+	        'forum_uuid' => 'required|exists:forums,uuid',
+	        'title' => 'required|string|max:255',
+	        'message' => 'required|string',
+	        'tags' => 'nullable|string|max:255',
+	        'attachment' => 'nullable|file|max:2048', // 2MB max
+	    ]);
+	
+	    $forum = Forum::where('uuid', $validated['forum_uuid'])->firstOrFail();
+	    $user = auth()->user();
+	
+	    // Upload attachment if provided
+	    $attachmentPath = null;
+	    if ($request->hasFile('attachment')) {
+	        $attachmentPath = $request->file('attachment')->store('attachments', 'public');
+	    }
+	
+	    $thread = ForumThread::create([
+	        'uuid' => Str::uuid(),
+	        'forum_uuid' => $forum->uuid,
+	        'user_uuid' => $user->uuid,
+	        'title' => $validated['title'],
+	        'tags' => $validated['tags'] ?? null,
+	        'is_pinned' => false,
+	        'is_locked' => false,
+	        'views' => 0,
+	        'attachment' => $attachmentPath,
+	    ]);
+	
+	    ForumComment::create([
+	        'uuid' => Str::uuid(),
+	        'thread_uuid' => $thread->uuid,
+	        'user_uuid' => $user->uuid,
+	        'body' => $validated['message'],
+	    ]);
+	
+	    return redirect()->route('forum.view', $forum)->with('success', __('forum.thread_created'));
+	}
+
+	public function editThread(Thread $thread)
+	{
+	    $this->authorize('update', $thread);
+	
+	    return view('forum.thread.edit', compact('thread'));
+	}
+	
+	public function updateThread(Request $request, Thread $thread)
+	{
+	    $this->authorize('update', $thread);
+	
+	    $validated = $request->validate([
+	        'title' => 'required|string|max:255',
+	    ]);
+	
+	    $thread->update($validated);
+	
+	    return redirect()->route('forum.view', $thread->forum)->with('success', __('forum.thread_updated'));
+	}
+	
+	public function destroyThread(Thread $thread)
+	{
+	    $this->authorize('delete', $thread);
+	
+	    $thread->delete();
+	
+	    return redirect()->route('forum.view', $thread->forum)->with('success', __('forum.thread_deleted'));
+	}
+	
+	public function myThreads()
+	{
+	    $threads = Thread::where('user_id', auth()->id())->latest()->with('forum')->get();
+	    return view('forum.thread.my_threads', compact('threads'));
+	}
 }
