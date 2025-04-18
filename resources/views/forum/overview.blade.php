@@ -30,13 +30,13 @@
 			    @if(auth()->user()?->isAdmin())
 			        <div class="flex space-x-2">
 			            <a href="{{ route('forum.edit', $forum) }}" class="text-sm text-yellow-500 hover:text-yellow-600 flex items-center">
-			                <i class="bi bi-pencil-square mr-1"></i> {{ __('forum.edit') }}
+			                <i class="bi bi-pencil-square mr-1"></i> {{ __('strings.edit') }}
 			            </a>
 			            <form method="POST" action="{{ route('forum.destroy', $forum->uuid) }}">
 			                @csrf
 			                @method('DELETE')
 			                <button type="submit" onclick="return confirm('{{ __('forum.delete_confirm') }}')" class="text-sm text-red-600 hover:text-red-700 flex items-center">
-			                    <i class="bi bi-trash3-fill mr-1"></i> {{ __('forum.delete') }}
+			                    <i class="bi bi-trash3-fill mr-1"></i> {{ __('strings.delete') }}
 			                </button>
 			            </form>
 			        </div>
