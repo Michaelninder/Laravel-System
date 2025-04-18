@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('forum')->group(function () {
     Route::get('/', [ForumController::class, 'overview'])->name('forum.overview');
-    Route::get('/{uuid}', [ForumController::class, 'view'])->name('forum.view');
+    Route::get('/{uuid}', [ForumController::class, 'viewForum'])->name('forum.view');
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/my-threads', [ForumController::class, 'myThreads'])->name('forum.my_threads');
