@@ -34,13 +34,13 @@
                 @if (auth()->check() && (auth()->user()->isAdmin() || auth()->user()->uuid === $thread->user_uuid))
 			        <div class="flex space-x-2">
                         <a href="{{ route('forum.thread.edit', $thread->uuid) }}" class="text-sm text-yellow-500 hover:text-yellow-600 flex items-center">
-                            <i class="bi bi-pencil-square mr-1"></i> {{ __('forum.thread.edit') }}
+                            <i class="bi bi-pencil-square mr-1"></i> {{ __('strings.edit') }}
                         </a>
                         <form method="POST" action="{{ route('forum.thread.destroy', $thread->uuid) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" onclick="return confirm('{{ __('forum.thread.delete_confirm') }}')" class="text-sm text-red-600 hover:text-red-700 flex items-center">
-                                <i class="bi bi-trash3-fill mr-1"></i> {{ __('forum.thread.delete') }}
+                                <i class="bi bi-trash3-fill mr-1"></i> {{ __('strings.delete') }}
                             </button>
                         </form>
 					</div>
