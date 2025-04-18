@@ -3,6 +3,12 @@
 @section('forum-content')
     <div class="flex justify-between items-center mb-4">
         <h1 class="text-xl font-semibold text-gray-800">{{ __('forum.title') }}</h1>
+		
+		@if(auth()->user()?->isAdmin())
+    		<a href="{{ route('forum.create') }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium py-2 px-4 rounded transition mt-4">
+    		  <i class="bi bi-plus-circle-fill text-lg"></i> {{ __('forum.create_forum') }}
+    		</a>
+		@endif
     </div>
 
     <div class="space-y-4">
@@ -36,11 +42,4 @@
             <p class="text-sm text-gray-500">{{ __('forum.no_forums') }}</p>
         @endforelse
     </div>
-	@if(auth()->user()?->isAdmin())
-    <a href="{{ route('forum.create') }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium py-2 px-4 rounded transition mt-4">
-      <i class="bi bi-plus-circle-fill text-lg"></i> {{ __('forum.create_forum') }}
-    </a>
-	@endif
 @endsection
-
-
