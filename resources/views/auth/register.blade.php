@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-@section('content')
+@section('main')
 <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
     <h2 class="text-xl font-semibold mb-4 text-center">
         <i class="bi bi-person-plus-fill mr-1"></i> {{ __('auth.register') }}
