@@ -103,7 +103,7 @@ class ForumController extends Controller
 	
 	    $thread->load(['comments.user']);
 	
-	    return view('forum.thread.show', compact('forum', 'thread'));
+	    return view('forum.thread.view', compact('forum', 'thread'));
 	}
 
 	public function createThread(Forum $forum)
