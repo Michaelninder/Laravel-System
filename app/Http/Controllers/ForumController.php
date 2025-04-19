@@ -118,7 +118,7 @@ class ForumController extends Controller
 	        'title' => $validated['title'],
 	        'is_pinned' => false,
 	        'is_locked' => false,
-	        'views' => 0,
+	        'views' => 0
 	    ]);
 	
 	    ForumComment::create([
