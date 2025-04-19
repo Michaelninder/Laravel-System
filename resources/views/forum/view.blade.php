@@ -1,8 +1,7 @@
 @extends('layouts.forum')
 
 @section('breadcrumb')
-    <a href="{{ route('forum.overview') }}" class="hover:underline">{{ __('Forums') }}</a>
-    <span class="mx-1">/</span>
+    <a href="{{ route('forum.overview') }}" class="hover:underline">{{ __('Forums') }}</a> /
     <span>{{ $forum->name }}</span>
 @endsection
 
