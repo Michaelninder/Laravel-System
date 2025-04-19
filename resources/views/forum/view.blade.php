@@ -22,13 +22,18 @@
             <div class="border border-gray-200 rounded p-4 bg-white flex justify-between items-start">
                 <div>
                     <h2 class="font-semibold text-base">
-                        <a href="{{ route('forum.thread.view', ['forum' => $forum->uuid, 'thread' => $thread->uuid]) }}" class="text-blue-600 hover:underline">
-                            {{ $thread->title }}
-                        </a>
-                    </h2>
-                    <p class="text-sm text-gray-500">
-                        {{ __('By') }} {{ $thread->user->username }} · {{ $thread->created_at->diffForHumans() }}
-                    </p>
+					    <a href="{{ route('forum.thread.view', ['forum' => $forum->uuid, 'thread' => $thread->uuid]) }}" class="text-blue-600 hover:underline">
+					        {{ $thread->title }}
+					    </a>
+					</h2>
+					
+					<p class="text-sm text-gray-700 mt-1">
+					    {{ $thread->comments->first()?->body ?? __('No description available.') }}
+					</p>
+					
+					<p class="text-sm text-gray-500">
+					    {{ __('By') }} {{ $thread->user->username }} · {{ $thread->created_at->diffForHumans() }}
+					</p>
                 </div>
 
                 @if (auth()->check() && (auth()->user()->isAdmin() || auth()->user()->uuid === $thread->user_uuid))
