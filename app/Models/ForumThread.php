@@ -1,33 +1,181 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
+use App\Models\ForumThread as Thread;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Forum;
+use App\Models\ForumThread;
+use App\Models\ForumComment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class ForumThread extends Model
+class ForumController extends Controller
 {
-    use HasFactory;
-
-    protected $fillable = ['uuid', 'forum_uuid', 'user_uuid', 'title', 'is_pinned', 'is_locked', 'views'];
-
-    public function forum()
+    public function overview()
     {
-        return $this->belongsTo(Forum::class, 'forum_uuid', 'uuid');
+        $forums = Forum::latest()->get();
+        return view('forum.overview', compact('forums'));
     }
 
-    public function user()
+    public function showForum(Forum $forum)
+	{
+	    $forum->load([
+		    'threads' => function ($query) {
+		        $query->latest();
+		    },
+		    'threads.user',
+		    'threads.firstComment'
+		]);
+	
+	    return view('forum.view', compact('forum'));
+	}
+
+
+    public function createForum()
     {
-        return $this->belongsTo(User::class, 'user_uuid', 'uuid');
+        if (!auth()->user()?->isAdmin()) {
+            abort(403);
+        }
+
+        return view('forum.create');
     }
 
-    public function comments()
+    public function storeForum(Request $request)
+	{
+	    if (!auth()->user()?->isAdmin()) {
+	        abort(403);
+	    }
+	
+	    $validated = $request->validate([
+	        'name' => 'required|string|max:255',
+	        'description' => 'nullable|string|max:1000',
+	        'order_index' => 'nullable|integer',
+	    ]);
+	
+	    Forum::create([
+	        'uuid' => Str::uuid(),
+	        'name' => $validated['name'],
+	        'description' => $validated['description'] ?? null,
+	        'order_index' => $validated['order_index'] ?? 0,
+	        'is_locked' => false,
+	    ]);
+	
+	    return redirect()->route('forum.overview')->with('success', __('forum.created'));
+	}
+
+    public function editForum(Forum $forum)
     {
-        return $this->hasMany(ForumComment::class, 'thread_uuid', 'uuid');
+        if (!auth()->user()?->isAdmin()) {
+            //return view('errors.custom', ['error' => 403]);
+            abort(403);
+        }
+
+        return view('forum.edit', compact('forum'));
+    }
+
+    public function updateForum(Request $request, Forum $forum)
+    {
+        if (!auth()->user()?->isAdmin()) {
+            //return view('errors.custom', ['error' => 403]);
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+	        'order_index' => 'nullable|integer',
+        ]);
+
+        $forum->update($validated);
+
+        return redirect()->route('forum.overview')->with('success', __('forum.updated'));
+    }
+
+    public function destroyForum(Forum $forum)
+    {
+        if (!auth()->user()?->isAdmin()) {
+            //return view('errors.custom', ['error' => 403]);
+            abort(403);
+        }
+
+        $forum->delete();
+
+        return redirect()->route('forum.overview')->with('success', __('forum.deleted'));
     }
 	
-	public function firstComment() // just test ...
+	public function showThread(Forum $forum, ForumThread $thread)
 	{
-	    return $this->hasOne(ForumComment::class, 'thread_uuid', 'uuid')->oldest();
+	    if ($thread->forum_uuid !== $forum->uuid) {
+	        abort(404);
+	    }
+	
+	    $thread->load(['comments.user']);
+	
+	    return view('forum.thread.view', compact('forum', 'thread'));
+	}
+
+	public function createThread(Forum $forum)
+	{
+	    return view('forum.thread.create', compact('forum'));
+	}
+	
+	public function storeThread(Request $request)
+	{
+	    $validated = $request->validate([
+	        'forum_uuid' => 'required|exists:forums,uuid',
+	        'title' => 'required|string|max:255',
+	        'message' => 'required|string',
+	    ]);
+	
+	    $forum = Forum::where('uuid', $validated['forum_uuid'])->firstOrFail();
+	    $user = auth()->user();
+	
+	    $thread = ForumThread::create([
+	        'uuid' => Str::uuid(),
+	        'forum_uuid' => $forum->uuid,
+	        'user_uuid' => $user->uuid,
+	        'title' => $validated['title'],
+	        'is_pinned' => false,
+	        'is_locked' => false,
+	        'views' => 0
+	    ]);
+	
+	    ForumComment::create([
+	        'uuid' => Str::uuid(),
+	        'thread_uuid' => $thread->uuid,
+	        'user_uuid' => $user->uuid,
+	        'body' => $validated['message'],
+	    ]);
+	
+	    return redirect()->route('forum.view', $forum)->with('success', __('forum.thread_created'));
+	}
+
+	public function editThread(Thread $thread)
+	{
+	    $this->authorize('update', $thread);
+	
+	    return view('forum.thread.edit', compact('thread'));
+	}
+	
+	public function updateThread(Request $request, Thread $thread)
+	{
+	    $this->authorize('update', $thread);
+	
+	    $validated = $request->validate([
+	        'title' => 'required|string|max:255',
+	    ]);
+	
+	    $thread->update($validated);
+	
+	    return redirect()->route('forum.view', $thread->forum)->with('success', __('forum.thread_updated'));
+	}
+	
+	public function destroyThread(Thread $thread)
+	{
+	    $this->authorize('delete', $thread);
+	
+	    $thread->delete();
+	
+	    return redirect()->route('forum.view', $thread->forum)->with('success', __('forum.thread_deleted'));
 	}
 }
