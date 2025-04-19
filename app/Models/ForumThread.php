@@ -25,4 +25,9 @@ class ForumThread extends Model
     {
         return $this->hasMany(ForumComment::class, 'thread_uuid', 'uuid');
     }
+	
+	public function firstComment() // just test ...
+	{
+	    return $this->hasOne(ForumComment::class, 'thread_uuid', 'uuid')->oldest();
+	}
 }
