@@ -72,7 +72,7 @@ Route::prefix('forum')->group(function () {
         });
     });
 	
-    Route::get('/{forum:uuid}/thread/{thread:uuid}', [ForumController::class, 'showForum'])->name('forum.thread.view');
+    Route::get('/{forum:uuid}/thread/{thread:uuid}', [ForumController::class, 'showThread'])->name('forum.thread.view');
     Route::get('/{forum:uuid}', [ForumController::class, 'showForum'])->name('forum.view');
 });
 
