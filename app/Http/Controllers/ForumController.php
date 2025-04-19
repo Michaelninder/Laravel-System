@@ -95,6 +95,17 @@ class ForumController extends Controller
         return redirect()->route('forum.overview')->with('success', __('forum.deleted'));
     }
 	
+	public function showThread(Forum $forum, ForumThread $thread)
+	{
+	    if ($thread->forum_uuid !== $forum->uuid) {
+	        abort(404);
+	    }
+	
+	    $thread->load(['comments.user']);
+	
+	    return view('forum.thread.show', compact('forum', 'thread'));
+	}
+
 	public function createThread(Forum $forum)
 	{
 	    return view('forum.thread.create', compact('forum'));
