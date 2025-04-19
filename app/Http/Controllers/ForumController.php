@@ -170,10 +170,4 @@ class ForumController extends Controller
 	
 	    return redirect()->route('forum.view', $thread->forum)->with('success', __('forum.thread_deleted'));
 	}
-	
-	public function myThreads()
-	{
-	    $threads = Thread::where('user_id', auth()->id())->latest()->with('forum')->get();
-	    return view('forum.thread.my_threads', compact('threads'));
-	}
 }
