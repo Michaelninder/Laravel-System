@@ -27,7 +27,6 @@
             @endforeach
         </div>
 
-        <!-- Bottom Extendable Textarea -->
         <form method="POST" action="{{ route('support.send', $ticket->uuid) }}" class="mt-4 flex flex-col">
             @csrf
             <textarea name="message" class="flex-grow border rounded-lg px-3 py-2 resize-y max-h-36" placeholder="{{ __('support.type_message') }}" required></textarea>
