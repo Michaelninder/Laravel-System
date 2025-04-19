@@ -52,13 +52,11 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('forum')->group(function () {
     Route::get('/', [ForumController::class, 'overview'])->name('forum.overview');
-    Route::get('/{forum:uuid}', [ForumController::class, 'showForum'])->name('forum.view');
-    Route::get('/{forum:uuid}/thread/{thread:uuid}', [ForumController::class, 'showForum'])->name('forum.thread.view');
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/my-threads', [ForumController::class, 'myThreads'])->name('forum.my_threads');
-		
-		Route::get('/{forum:uuid}/thread/create', [ForumController::class, 'createThread'])->name('forum.thread.create');
+
+        Route::get('/{forum:uuid}/thread/create', [ForumController::class, 'createThread'])->name('forum.thread.create');
         Route::post('/thread', [ForumController::class, 'storeThread'])->name('forum.thread.store');
 
         Route::get('/thread/{thread:uuid}/edit', [ForumController::class, 'editThread'])->name('forum.thread.edit');
@@ -68,11 +66,14 @@ Route::prefix('forum')->group(function () {
         Route::middleware('check.admin')->group(function () {
             Route::get('/admin/create', [ForumController::class, 'createForum'])->name('forum.create');
             Route::post('/admin/create', [ForumController::class, 'storeForum'])->name('forum.store');
-            Route::get('/admin/edit/{forum:uuid}', [ForumController::class, 'editForum'])->name('forum.edit');
-            Route::post('/admin/update/{forum:uuid}', [ForumController::class, 'updateForum'])->name('forum.update');
+            Route::get('/admin/edit/{forum}', [ForumController::class, 'editForum'])->name('forum.edit');
+            Route::post('/admin/update/{forum}', [ForumController::class, 'updateForum'])->name('forum.update');
             Route::delete('/admin/delete/{forum:uuid}', [ForumController::class, 'destroyForum'])->name('forum.destroy');
         });
     });
+	
+    Route::get('/{forum:uuid}/thread/{thread:uuid}', [ForumController::class, 'showForum'])->name('forum.thread.view');
+    Route::get('/{forum:uuid}', [ForumController::class, 'showForum'])->name('forum.view');
 });
 
 Route::middleware(['auth', 'check.admin'])->prefix('admin')->name('admin.')->group(function () {
