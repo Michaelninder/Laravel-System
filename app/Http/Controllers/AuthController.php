@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-
 class AuthController extends Controller
 {
     public function showRegister()
@@ -76,6 +75,4 @@ class AuthController extends Controller
 
         return redirect()->route('auth.login')->with('success', __('auth.logout_success'));
     }
-
-
 }
