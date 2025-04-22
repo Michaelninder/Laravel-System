@@ -8,8 +8,7 @@
         @php $lang = basename($langDir); @endphp
         @if($lang !== app()->getLocale())
             <a href="{{ url('/set-locale/' . $lang) }}" class="flex items-center px-3 py-2 hover:bg-gray-100 text-sm">
-                <img src="{{ asset('img/SetLocale/' . $lang . '.png') }}"
-                     class="w-5 h-3 mr-2" alt="{{ $lang }}">
+                <img src="{{ asset('img/SetLocale/' . $lang . '.png') }}" class="w-5 h-3 mr-2" alt="{{ $lang }}">
                 {{ strtoupper($lang) }}
             </a>
         @endif
