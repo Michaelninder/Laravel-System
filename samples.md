@@ -1,5 +1,22 @@
 # Some Code Samples:
 
+### Lang Switcher based on the lang resource folders
+```php
+
+<div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-28 bg-white border rounded shadow-lg z-50">
+    @foreach(File::exists(resource_path('lang')) ? File::directories(resource_path('lang')) : [] as $langDir)
+        @php $lang = basename($langDir); @endphp
+        @if($lang !== app()->getLocale())
+            <a href="{{ url('/set-locale/' . $lang) }}" class="flex items-center px-3 py-2 hover:bg-gray-100 text-sm">
+                <img src="{{ asset('img/SetLocale/' . $lang . '.png') }}"
+                     class="w-5 h-3 mr-2" alt="{{ $lang }}">
+                {{ strtoupper($lang) }}
+            </a>
+        @endif
+    @endforeach
+</div>
+```
+
 ### Support Ticket Messages
 ```php
 @foreach ($messages as $message)
