@@ -38,7 +38,6 @@
                             <div class="flex items-center justify-between mt-2 text-xs text-gray-500">
                                 <span>{{ $comment->created_at->format('d.m.Y H:i') }}</span>
                                 <div class="flex items-center gap-2">
-                                    <!-- Vote Buttons -->
                                     <form action="{{ route('forum.comment.vote', ['comment' => $comment->uuid, 'type' => 'up']) }}" method="POST">
                                         @csrf
                                         <button class="text-green-600 hover:text-green-700" title="Upvote">
