@@ -1,8 +1,8 @@
 @extends('layouts.forum')
 
 @section('breadcrumb')
-    <a href="{{ route('forum.overview') }}" class="hover:underline">{{ __('Forums') }}</a> /
-    <a href="{{ route('forum.view', $forum) }}" class="hover:underline">{{ $forum->name }}</a> /
+    <a href="{{ route('forum.overview') }}" class="hover:underline text-blue-600">{{ __('Forums') }}</a> /
+    <a href="{{ route('forum.view', $forum) }}" class="hover:underline text-blue-600">{{ $forum->name }}</a> /
     <span>{{ $thread->title }}</span>
 @endsection
 
@@ -16,8 +16,8 @@
         </div>
 
         <a href="{{ request()->url() }}" onclick="navigator.clipboard.writeText(this.href); alert('Link copied!'); return false;"
-           class="btn btn-outline-secondary btn-sm">
-            <i class="bi bi-share-fill"></i> {{ __('Share') }}
+           class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm text-gray-700 rounded-md hover:bg-gray-100 transition">
+            <i class="bi bi-share-fill mr-1"></i> {{ __('Share') }}
         </a>
     </div>
 
@@ -62,11 +62,12 @@
             @csrf
             <div class="flex items-center gap-2">
                 <textarea name="body" required
-                          class="form-control flex-grow"
+                          class="flex-grow border border-gray-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
                           placeholder="{{ __('Write a comment...') }}"
                           rows="2"></textarea>
-                <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-send-fill"></i> {{ __('Send') }}
+                <button type="submit"
+                        class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition">
+                    <i class="bi bi-send-fill mr-1"></i> {{ __('Send') }}
                 </button>
             </div>
         </form>
