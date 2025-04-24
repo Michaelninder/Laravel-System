@@ -7,6 +7,8 @@ __`This Project is build on Laravel 9/10 (Laravel on a Plesk Webserver)`__
 ### Preview
 https://laravel-system.fternis.de/
 
+### Database Strukture
+the database structure can be found in dbstructure.md
 <br>
 
 ### Credits
