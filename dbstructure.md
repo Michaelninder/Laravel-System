@@ -84,7 +84,7 @@
 ```
 
 ## Changelog
-### Changelogs Table (``changelogs``)
+### 📃 Changelogs Table (``changelogs``)
 ```php
 Schema::create('changelogs', function (Blueprint $table) {
     $table->id();
@@ -94,7 +94,7 @@ Schema::create('changelogs', function (Blueprint $table) {
     $table->timestamps();
 });
 ```
-### Changelog Changes Table (``changelog_changes``)
+### 📄 Changelog Changes Table (``changelog_changes``)
 ```php
 Schema::create('changelog_changes', function (Blueprint $table) {
     $table->id();
