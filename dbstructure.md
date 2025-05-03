@@ -100,7 +100,7 @@ Schema::create('changelog_changes', function (Blueprint $table) {
     $table->id();
     $table->uuid('uuid')->unique();
     $table->uuid('changelog_uuid');
-    $table->string('type'); // e.g., fix, update, feature, deletion
+    $table->string('type'); // e.g.: fix, update, feature, deletion
     $table->string('name');
     $table->text('description')->nullable();
     $table->timestamps();
