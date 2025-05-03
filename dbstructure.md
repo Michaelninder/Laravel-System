@@ -82,3 +82,27 @@
    boolean('is_upvote') // true = upvote, false = downvote
    timestamps()
 ```
+
+## Changelog
+### Changelogs Table (``changelogs``)
+```php
+Schema::create('changelogs', function (Blueprint $table) {
+    $table->id();
+    $table->uuid('uuid')->unique();
+    $table->string('title');
+    $table->date('date');
+    $table->timestamps();
+});
+```
+### Changelog Changes Table (``changelog_changes``)
+```php
+Schema::create('changelog_changes', function (Blueprint $table) {
+    $table->id();
+    $table->uuid('uuid')->unique();
+    $table->uuid('changelog_uuid');
+    $table->string('type'); // e.g., fix, update, feature, deletion
+    $table->string('name');
+    $table->text('description')->nullable();
+    $table->timestamps();
+});
+```
