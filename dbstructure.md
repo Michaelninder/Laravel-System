@@ -84,7 +84,7 @@
 ```
 
 ## Changelog
-### 📃 Changelogs Table (``changelogs``)
+### 📖 Changelogs Table (``changelogs``)
 ```php
 Schema::create('changelogs', function (Blueprint $table) {
     $table->id();
