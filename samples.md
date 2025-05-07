@@ -1,6 +1,6 @@
 # Some Code Samples:
 
-### Lang Switcher based on the lang resource folders
+### Lang Switcher based on the lang/{locale} resource folders
 ```php
 
 <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-28 bg-white border rounded shadow-lg z-50">
