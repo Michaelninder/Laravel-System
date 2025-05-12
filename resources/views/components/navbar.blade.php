@@ -48,13 +48,13 @@
 		         class="absolute left-0 mt-2 w-56 bg-white border border-gray-200 rounded shadow-lg z-50 max-h-64 overflow-y-auto">
 		        <a href="{{ route('forum.overview') }}"
 		           class="flex items-start gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b">
-		            <i class="bi bi-layout-text-window text-blue-600 mt-0.5"></i>
+		            <i class="bi bi-layout-text-window text-gray-600 mt-0.5"></i>
 		            <span>{{ __('strings.overview') }}</span>
 		        </a>
 		        @foreach($forums as $forum)
 		            <a href="{{ route('forum.view', $forum) }}"
 		               class="flex items-start gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b last:border-b-0">
-		                <i class="bi bi-chat-dots-fill text-gray-500 mt-0.5"></i>
+		                <i class="bi bi-chat-dots text-gray-500 mt-0.5"></i>
 		                <span>{{ $forum->name }}</span>
 		            </a>
 		        @endforeach
