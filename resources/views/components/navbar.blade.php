@@ -37,9 +37,29 @@
             </div>
         </div>
 	
-    	<a href="{{ route('forum.overview') }}" class="flex items-center text-gray-700 hover:text-blue-600 text-sm">
-    	    <i class="bi bi-chat-left-text mr-2 text-base"></i> {{ __('forums.title') }}
-    	</a>
+    	<div x-data="{ open: false }" class="relative">
+		    <button @click="open = !open"
+		            class="flex items-center text-gray-700 hover:text-blue-600 text-sm focus:outline-none">
+		        <i class="bi bi-chat-left-text mr-2 text-base"></i> {{ __('forums.title') }}
+		        <i class="bi bi-chevron-down ml-1 text-xs"></i>
+		    </button>
+		
+		    <div x-show="open" @click.away="open = false" x-transition
+		         class="absolute left-0 mt-2 w-56 bg-white border border-gray-200 rounded shadow-lg z-50 max-h-64 overflow-y-auto">
+		        <a href="{{ route('forum.overview') }}"
+		           class="flex items-start gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b">
+		            <i class="bi bi-layout-text-window text-blue-600 mt-0.5"></i>
+		            <span>{{ __('forums.overview') }}</span>
+		        </a>
+		        @foreach($forums as $forum)
+		            <a href="{{ route('forum.view', $forum) }}"
+		               class="flex items-start gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b last:border-b-0">
+		                <i class="bi bi-chat-dots-fill text-gray-500 mt-0.5"></i>
+		                <span>{{ $forum->name }}</span>
+		            </a>
+		        @endforeach
+		    </div>
+		</div>
     </div>
 
     <div class="flex items-center space-x-4">
