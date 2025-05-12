@@ -40,7 +40,7 @@
     	<div x-data="{ open: false }" class="relative">
 		    <button @click="open = !open"
 		            class="flex items-center text-gray-700 hover:text-blue-600 text-sm focus:outline-none">
-		        <i class="bi bi-chat-left-text mr-2 text-base"></i> {{ __('forums.title') }}
+		        <i class="bi bi-chat-square-text mr-2 text-base"></i> {{ __('forums.title') }}
 		        <i class="bi bi-chevron-down ml-1 text-xs"></i>
 		    </button>
 		
