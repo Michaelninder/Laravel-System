@@ -49,7 +49,7 @@
 		        <a href="{{ route('forum.overview') }}"
 		           class="flex items-start gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b">
 		            <i class="bi bi-layout-text-window text-blue-600 mt-0.5"></i>
-		            <span>{{ __('forums.overview') }}</span>
+		            <span>{{ __('strings.overview') }}</span>
 		        </a>
 		        @foreach($forums as $forum)
 		            <a href="{{ route('forum.view', $forum) }}"
