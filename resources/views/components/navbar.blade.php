@@ -9,11 +9,35 @@
         </a>
 
         @auth
-            <a href="{{ route('support.overview') }}" class="flex items-center text-gray-700 hover:text-blue-600 text-sm">
-                <i class="bi bi-headset mr-2 text-base"></i> {{ __('support.title') }}
-            </a>
+         <a href="{{ route('support.overview') }}" class="flex items-center text-gray-700 hover:text-blue-600 text-sm">
+             <i class="bi bi-headset mr-2 text-base"></i> {{ __('support.title') }}
+         </a>
         @endauth
+
+        <div x-data="{ open: false }" class="relative">
+            <button @click="open = !open"
+                    class="flex items-center text-red-600 hover:text-red-700 text-sm focus:outline-none">
+                <i class="bi bi-exclamation-triangle mr-1 text-base"></i> Errors
+                <i class="bi bi-chevron-down ml-1 text-xs"></i>
+            </button>
+
+            <div x-show="open" @click.away="open = false" x-transition
+                 class="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50">
+                @php $errors = ['403', '404', '419', '429', '500', '503']; @endphp
+                @foreach($errors as $err)
+                    <a href="{{ route('errors.custom', $err) }}"
+                       class="flex items-start gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b last:border-b-0">
+                        <i class="bi bi-bug-fill text-red-600 mt-0.5"></i>
+                        <div>
+                            <span class="font-medium">Error {{ $err }}</span><br>
+                            <span class="text-xs text-gray-500">{{ __('errors.' . $err . '.title') }}</span>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </div>
     </div>
+
     <div class="flex items-center space-x-4">
         @auth
             @if(auth()->user()->isAdmin())
