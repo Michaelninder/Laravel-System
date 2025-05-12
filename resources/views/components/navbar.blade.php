@@ -36,6 +36,10 @@
                 @endforeach
             </div>
         </div>
+	
+    	<a href="{{ route('forum.overview') }}" class="flex items-center text-gray-700 hover:text-blue-600 text-sm">
+    	    <i class="bi bi-chat-left-text mr-2 text-base"></i> {{ __('forums.title') }}
+    	</a>
     </div>
 
     <div class="flex items-center space-x-4">
