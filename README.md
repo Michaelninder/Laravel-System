@@ -13,4 +13,4 @@ the database structure can be found in dbstructure.md
 
 ### Credits
 #### Images
-- all Images used for SetLocale(lang-switcher) are from <a href="https://skrime.eu/other/flag" target="_blank">Skrime</a>
+- all Images used for SetLocale(lang-switcher) are from <a href="https://skrime.eu/a/Michaelninder" <!-- href="https://skrime.eu/other/flag"--> target="_blank">Skrime</a>
