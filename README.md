@@ -1,7 +1,7 @@
 # Laravel-System
 A Clean Laravel Webite system with SetLocale, Admin Dashboard and more
 
-__`This Project is build on Laravel 9/10 (i use Laravel on a Plesk Webserver)`__
+__`This Project is build on Laravel 9/10 (i use Laravel on a Plesk Webserver with PHP 8.0)`__
 <br>
 
 ### Preview
