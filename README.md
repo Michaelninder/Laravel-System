@@ -10,6 +10,11 @@ https://laravel-system.fternis.de/
 ### Database Structure
 the database structure can be found in dbstructure.md
 <br>
+### Features
+- Customizable Rules Page (with admin Panel)
+- Custom error pages (translatable)
+- Forum (Forums, Threads, Comments, Votes)
+- Stuport Tickets (Filtering, creation, ...)
 
 ### Credits
 #### Images
