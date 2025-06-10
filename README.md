@@ -13,6 +13,7 @@ the database structure can be found in dbstructure.md
 ### Features
 - Customizable Rules Page (with admin Panel)
 - Custom error pages (translatable)
+- Authentication
 - Forum (Forums, Threads, Comments, Votes)
 - Stuport Tickets (Filtering, creation, ...)
 
